@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1693995442 source:c:\users\redmi\desktop\spl1\spl1\guassianelimination.cpp
+	<bits/stdc++.h>
+	<windows.h>
+	<unistd.h>
+
+1693995457 source:c:\users\redmi\desktop\spl1\spl1\main.cpp
+	<bits/stdc++.h>
+	<windows.h>
+
