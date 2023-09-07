@@ -20,7 +20,7 @@ void menu(){
              break;
       case 2:gaussJordan();
              break;
-      case 3:
+      case 3:LU_DECOMPOSITION();
       case 4:
       case 5:
       case 6:exit(0);

@@ -48,7 +48,7 @@ void gaussJordan(){
             cout << "Swapping rows " << i << " and " << maxRow << ":" << endl;
             printMatrix(matrix);
         }
-        /*
+
          if (abs(matrix[i][i]) < 1e-10) {
             cout << "Zero pivot encountered. Swapping rows to avoid division by zero." << endl;
             bool swapped = false;
@@ -65,7 +65,7 @@ void gaussJordan(){
                 return; // Exit the function if no unique solution exists
             }
         }
-        */
+
         double pivot = matrix[i][i];
 
         // Scale the pivot row

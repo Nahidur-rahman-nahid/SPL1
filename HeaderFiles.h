@@ -12,4 +12,6 @@ void printMatrix( vector<vector<double>>& matrix);
 void gaussJordan();
 void swapRows(vector<vector<double>>&matrix, int row1, int row2);
 vector<double> backSubstitution( vector<vector<double>>& matrix);
-
+void luDecompose(vector<vector<double>>& A, vector<vector<double>>& L, vector<vector<double>>& U, vector<int>& P);
+vector<double> solveWithLU( vector<vector<double>>& A, vector<double>& B);
+void LU_DECOMPOSITION();

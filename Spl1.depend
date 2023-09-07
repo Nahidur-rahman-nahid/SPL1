@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1694063446 source:c:\users\redmi\desktop\spl1\spl1\guassianelimination.cpp
+1694066416 source:c:\users\redmi\desktop\spl1\spl1\guassianelimination.cpp
 	"HeaderFiles.h"
 	<bits/stdc++.h>
 	<windows.h>
@@ -8,16 +8,16 @@
 1694062193 source:c:\users\redmi\desktop\spl1\spl1\main.cpp
 	"HeaderFiles.h"
 
-1694064254 source:c:\users\redmi\desktop\spl1\spl1\gaussjordan.cpp
+1694090572 source:c:\users\redmi\desktop\spl1\spl1\gaussjordan.cpp
 	"HeaderFiles.h"
 
-1694064409 c:\users\redmi\desktop\spl1\spl1\headerfiles.h
+1694083434 c:\users\redmi\desktop\spl1\spl1\headerfiles.h
 	"HeaderFiles.h"
 	<bits/stdc++.h>
 	<windows.h>
 	<unistd.h>
 	<math.h>
 
-1694019617 source:c:\users\redmi\desktop\spl1\spl1\menu.cpp
+1694083399 source:c:\users\redmi\desktop\spl1\spl1\menu.cpp
 	"HeaderFiles.h"
 
