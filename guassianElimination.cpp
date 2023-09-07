@@ -1,21 +1,11 @@
+#include "HeaderFiles.h"
 #include<bits/stdc++.h>
 #include<windows.h>
 #include <unistd.h>
 using namespace std;
 
-// void printMatrix(const vector<vector<double>>& matrix) {
-//     for (const auto& row : matrix) {
-//         for (double val : row) {
-//                 if(val >= 0)cout << " " << val << "   ";
-//                 else
-//                 cout << fixed << setprecision(2) <<  val << "   " << setw(8);
-//         }
-//         cout << endl;
-//     }
-//     cout << endl;
-// }
 
-void printMatrix(const vector<vector<double>>& matrix)
+void prinTMatrix(const vector<vector<double>>& matrix)
 {
     int numCols = matrix[0].size();
     vector<int> colWidths(numCols, 0);
@@ -45,6 +35,17 @@ void printMatrix(const vector<vector<double>>& matrix)
     }
     cout << endl;
 }
+void printMatrix(vector<vector<double>>&matrix){
+    for(int i = 0;i < matrix.size();i++){
+        for(int j = 0;j < matrix[0].size();j++){
+            if(matrix[i][j] >= 0.0)
+                cout << " " << fixed << setprecision(2) << matrix[i][j] << "  ";
+            else cout << fixed << setprecision(2) << matrix[i][j] << "  ";
+        }
+        cout << endl;
+    }
+
+}
 
 void swapRows(vector<vector<double>>&matrix, int row1, int row2)
 {
@@ -57,7 +58,7 @@ void swapRows(vector<vector<double>>&matrix, int row1, int row2)
     }
 }
 
-vector<double> backSubstitution(const vector<vector<double>>& matrix)
+vector<double> backSubstitution( vector<vector<double>>& matrix)
 {
     int numRows = matrix.size();
     int numCols = matrix[0].size();
@@ -81,7 +82,6 @@ void gaussianElimination()
     int  numRows,numCols;
     cout << "enter the number of equations: ";
 
-    //freopen("linearSystemEquations.txt","r",stdin);
     cin >> numRows;
     numCols = numRows+1;
 
@@ -100,8 +100,6 @@ void gaussianElimination()
 
     cout << "Original Matrix:" << endl;
     printMatrix(matrix);
-
-
 
      numRows = matrix.size();
      numCols = matrix[0].size();
@@ -159,33 +157,9 @@ void gaussianElimination()
     }
 
 }
-void menu(){
-    cout <<  "\t\t\t\t\t\t***********************************\n";
-    cout <<  "\t\t\t\t\t\t  Linear System Equations Solver   \n";
-    cout <<  "\t\t\t\t\t\t***********************************\n\n\n";
-
-    cout <<  "\t\t\t\tMETHODS:\n";
-    cout <<  "\t\t\t\t--------\n";
-    cout<<"\t\t\t\t\t\t 1. Gaussian Elimination\n\n";
-    cout<<"\t\t\t\t\t\t 2. Gauss-Jordan Elimination\n\n";
-    cout<<"\t\t\t\t\t\t 3. LU Decomposition\n\n";
-    cout<<"\t\t\t\t\t\t 4. Matrix Inversion \n\n";
-    cout<<"\t\t\t\t\t\t 5. Creamer's Rule\n\n";
-    cout<<"\t\t\t\t\t\t 6. Exit \n\n\n";
-    cout << "Select your preferred method to solve the system : ";
-    int choice;
-    cin >> choice;
-    switch(choice){
-      case 1:gaussianElimination();
-             break;
-
-      case 6:exit(0);
-      break;
-      default :cout << "invalid choice" << endl,menu();
 
 
-    }
-}
+
 
 
 

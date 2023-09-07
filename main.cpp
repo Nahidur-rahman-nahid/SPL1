@@ -1,6 +1,7 @@
-#include <bits/stdc++.h>
-#include <windows.h>
-//#include "gaussianElimination.h"
+#include "HeaderFiles.h"
+//#include <bits/stdc++.h>
+//#include <windows.h>
+
 using namespace std;
 void menu();
 
@@ -17,10 +18,7 @@ int main(){
     info.wAttributes = (info.wAttributes & 0xFFF0)| BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN;
     SetConsoleScreenBufferInfoEx(hConsole,&info);
 
-
     menu();
-
-
 
     for(int i = 0;i < buffersize.Y;i++){
        for(int j = 0;j < buffersize.X;++j){
@@ -28,7 +26,7 @@ int main(){
        }
     }
 
-    //Reset text color to default
+    //can Reset text color to default next
 
 
     return 0;
