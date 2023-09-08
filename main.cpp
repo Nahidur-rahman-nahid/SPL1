@@ -1,7 +1,6 @@
 #include "HeaderFiles.h"
 //#include <bits/stdc++.h>
 //#include <windows.h>
-
 using namespace std;
 void menu();
 
@@ -25,9 +24,6 @@ int main(){
            cout << " ";
        }
     }
-
-    //can Reset text color to default next
-
 
     return 0;
 }

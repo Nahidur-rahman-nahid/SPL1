@@ -3,7 +3,7 @@ void gaussJordan(){
 
     vector<vector<double>> matrix ;
     int  numRows,numCols;
-    cout << "enter the number of equations: ";
+    cout << "enter the number of unknowns( >= 2): ";
     cin >> numRows;
     cout << "Equation's will be in coefficient and constant form." << endl;
     cout << "Example:(ax + by + cz = d) input : a b c d\n";
@@ -29,8 +29,6 @@ void gaussJordan(){
     for (int i = 0; i < numRows; ++i) {
         // Display the current step number
         cout << "Step " << i + 1 << ":" << endl;
-
-        // Display the original matrix before any operations
         cout << "Initial state of Matrix:" << endl;
         printMatrix(matrix);
 
@@ -42,7 +40,6 @@ void gaussJordan(){
             }
         }
 
-        // Swap current row with the row containing the maximum pivot value
         if (maxRow != i) {
             swap(matrix[i], matrix[maxRow]);
             cout << "Swapping rows " << i << " and " << maxRow << ":" << endl;
@@ -70,7 +67,10 @@ void gaussJordan(){
 
         // Scale the pivot row
         for (int j = 0; j < numCols; ++j) {
-            matrix[i][j] /= pivot;
+            double tmp = matrix[i][j] / pivot;
+            if(tmp == -0.00)matrix[i][j] = 0.00;
+            else
+                matrix[i][j] /= pivot;
         }
 
         // Eliminate other rows

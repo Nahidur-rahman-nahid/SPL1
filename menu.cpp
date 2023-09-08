@@ -21,7 +21,8 @@ void menu(){
       case 2:gaussJordan();
              break;
       case 3:LU_DECOMPOSITION();
-      case 4:
+             break;
+      case 4:matrixInversion();
       case 5:
       case 6:exit(0);
              break;

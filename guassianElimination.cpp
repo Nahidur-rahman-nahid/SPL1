@@ -4,7 +4,6 @@
 #include <unistd.h>
 using namespace std;
 
-
 void prinTMatrix(const vector<vector<double>>& matrix)
 {
     int numCols = matrix[0].size();
@@ -36,6 +35,7 @@ void prinTMatrix(const vector<vector<double>>& matrix)
     cout << endl;
 }
 void printMatrix(vector<vector<double>>&matrix){
+
     for(int i = 0;i < matrix.size();i++){
         for(int j = 0;j < matrix[0].size();j++){
             if(matrix[i][j] >= 0.0)
@@ -80,7 +80,7 @@ void gaussianElimination()
 {
     vector<vector<double>> matrix ;
     int  numRows,numCols;
-    cout << "enter the number of equations: ";
+    cout << "enter the number of unknowns( >= 2): ";
 
     cin >> numRows;
     numCols = numRows+1;
@@ -98,8 +98,8 @@ void gaussianElimination()
         matrix.push_back(row);
     }
 
-    cout << "Original Matrix:" << endl;
-    printMatrix(matrix);
+     cout << "Original Matrix:" << endl;
+     printMatrix(matrix);
 
      numRows = matrix.size();
      numCols = matrix[0].size();

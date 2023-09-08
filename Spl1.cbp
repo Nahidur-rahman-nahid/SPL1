@@ -32,7 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="HeaderFiles.h" />
+		<Unit filename="LuDecomposition.cpp" />
+		<Unit filename="gaussJordan.cpp" />
+		<Unit filename="guassianElimination.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menu.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

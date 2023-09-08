@@ -121,7 +121,7 @@ vector<double> solveWithLU( vector<vector<double>>& A,vector<double>& B) {
 void LU_DECOMPOSITION(){
 
     int n;
-    cout << "Enter the number of equations: ";
+    cout << "Enter the number of unknowns: ";
     cin >> n;
 
     vector<vector<double>> A(n, vector<double>(n, 0.0));
@@ -129,6 +129,7 @@ void LU_DECOMPOSITION(){
 
     cout << "Enter the coefficients of the linear system:" << endl;
     for (int i = 0; i < n; ++i) {
+        cout << "enter " << (i+1) << "th number equation : ";
         for (int j = 0; j < n; ++j) {
             cin >> A[i][j];
         }
