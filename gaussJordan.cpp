@@ -7,6 +7,7 @@ void gaussJordan(){
     cin >> numRows;
     cout << "Equation's will be in coefficient and constant form." << endl;
     cout << "Example:(ax + by + cz = d) input : a b c d\n";
+
     //freopen("linearSystemEquations.txt","r",stdin);
 
     numCols = numRows+1;
@@ -46,7 +47,7 @@ void gaussJordan(){
             printMatrix(matrix);
         }
 
-         if (abs(matrix[i][i]) < 1e-10) {
+          if (abs(matrix[i][i]) < 1e-10) {
             cout << "Zero pivot encountered. Swapping rows to avoid division by zero." << endl;
             bool swapped = false;
             for (int j = i + 1; j < numRows; ++j) {
@@ -61,7 +62,7 @@ void gaussJordan(){
                 cout << "No unique solution exists." << endl;
                 return; // Exit the function if no unique solution exists
             }
-        }
+         }
 
         double pivot = matrix[i][i];
 

@@ -23,7 +23,9 @@ void menu(){
       case 3:LU_DECOMPOSITION();
              break;
       case 4:matrixInversion();
-      case 5:
+             break;
+      case 5:creamerRule();
+             break;
       case 6:exit(0);
              break;
       default :cout << "invalid choice" << endl,menu();

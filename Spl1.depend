@@ -1,29 +1,29 @@
 # depslib dependency file v1.0
-1694095744 source:c:\users\redmi\desktop\spl1\spl1\guassianelimination.cpp
+1694267139 source:c:\users\redmi\desktop\spl1\spl1\guassianelimination.cpp
 	"HeaderFiles.h"
 	<bits/stdc++.h>
 	<windows.h>
 	<unistd.h>
 
-1694140163 source:c:\users\redmi\desktop\spl1\spl1\main.cpp
+1694144625 source:c:\users\redmi\desktop\spl1\spl1\main.cpp
 	"HeaderFiles.h"
 
-1694099947 source:c:\users\redmi\desktop\spl1\spl1\gaussjordan.cpp
+1694162848 source:c:\users\redmi\desktop\spl1\spl1\gaussjordan.cpp
 	"HeaderFiles.h"
 
-1694141957 c:\users\redmi\desktop\spl1\spl1\headerfiles.h
+1694268049 c:\users\redmi\desktop\spl1\spl1\headerfiles.h
 	"HeaderFiles.h"
 	<bits/stdc++.h>
 	<windows.h>
 	<unistd.h>
 	<math.h>
 
-1694142211 source:c:\users\redmi\desktop\spl1\spl1\menu.cpp
+1694267969 source:c:\users\redmi\desktop\spl1\spl1\menu.cpp
 	"HeaderFiles.h"
 
-1694095961 source:c:\users\redmi\desktop\spl1\spl1\ludecomposition.cpp
+1694243119 source:c:\users\redmi\desktop\spl1\spl1\ludecomposition.cpp
 	"HeaderFiles.h"
 
-1694142761 source:c:\users\redmi\desktop\spl1\spl1\matrixinversion.cpp
+1694249026 source:c:\users\redmi\desktop\spl1\spl1\matrixinversion.cpp
 	"HeaderFiles.h"
 

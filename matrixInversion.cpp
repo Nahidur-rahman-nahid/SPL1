@@ -2,7 +2,7 @@
 
 using namespace std;
 
-double determinant(const vector<vector<double>>& A) {
+double determinant( vector<vector<double>>& A) {
     int n = A.size();
     if (n != A[0].size()) {
         throw runtime_error("Matrix is not square, and determinant cannot be calculated.");
@@ -37,7 +37,7 @@ double determinant(const vector<vector<double>>& A) {
 
 
 
-vector<vector<double>> matrixMultiply(const vector<vector<double>>& A, const vector<vector<double>>& B) {
+vector<vector<double>> matrixMultiply( vector<vector<double>>& A,  vector<vector<double>>& B) {
     int n = A.size();
     int m = B[0].size();
     int p = B.size();
@@ -56,7 +56,7 @@ vector<vector<double>> matrixMultiply(const vector<vector<double>>& A, const vec
 }
 
 // Function to perform matrix inversion
-vector<vector<double>> matrixInverse(const vector<vector<double>>& A) {
+vector<vector<double>> matrixInverse( vector<vector<double>>& A) {
     int n = A.size();
     if (n != A[0].size() || determinant(A) == 0.0) {
         throw runtime_error("Matrix is singular. The linear system may have no unique solution or infinitely many solutions.");
@@ -155,9 +155,9 @@ void matrixInversion(){
         for (int i = 0; i < n; ++i) {
             if(X[i][0] >= 0.0)
                 cout << "x[" << i << "] = " << " " << X[i][0] << endl;
-            else cout << cout << "x[" << i << "] = " <<  X[i][0] << endl;
+            else cout <<  "x[" << i << "] = " <<  X[i][0] << endl;
         }
-    } catch (const runtime_error& e) {
+    }catch (const runtime_error& e) {
         cerr << "Error: " << e.what() << endl;
     }
 }

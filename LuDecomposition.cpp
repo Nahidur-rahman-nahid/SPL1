@@ -1,6 +1,6 @@
 #include"HeaderFiles.h"
 
-void luDecompose(vector<vector<double>>& A, vector<vector<double>>& L, vector<vector<double>>& U, vector<int>& P) {
+void luDecompose(vector<vector<double>>& A, vector<vector<double>>& L, vector<vector<double>>& U, vector<int>& P){
     int n = A.size();
 
     // Initialize L and U matrices

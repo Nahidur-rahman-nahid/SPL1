@@ -4,36 +4,7 @@
 #include <unistd.h>
 using namespace std;
 
-void prinTMatrix(const vector<vector<double>>& matrix)
-{
-    int numCols = matrix[0].size();
-    vector<int> colWidths(numCols, 0);
 
-    // Calculate maximum width needed for each column
-    for (const auto& row : matrix)
-    {
-        for (int i = 0; i < numCols; ++i)
-        {
-            int width = to_string(int(row[i])).length() + 3; // Including sign and decimal points
-            colWidths[i] = max(colWidths[i], width);
-        }
-    }
-
-    for (const auto& row : matrix)
-    {
-        for (int i = 0; i < numCols; ++i)
-        {
-            cout << fixed << setprecision(2) << setw(colWidths[i]);
-            if(i != 0)
-            {
-                cout << " "; // Add a space before positive values (excluding the first column)
-            }
-            cout << row[i];
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
 void printMatrix(vector<vector<double>>&matrix){
 
     for(int i = 0;i < matrix.size();i++){
@@ -152,8 +123,11 @@ void gaussianElimination()
     char ch = 'a';
     for (int i = 0; i < solution.size(); ++i)
     {
+
         //cout << "x[" << i << "] = " << solution[i] << endl;
-        cout << char(ch+i) << " = " << solution[i] <<endl;
+        if(solution[i] >= 0.0)
+            cout << char(ch+i) << " = " << " " << solution[i] <<endl;
+        else  cout << char(ch+i) << " = " << solution[i] <<endl;
     }
 
 }

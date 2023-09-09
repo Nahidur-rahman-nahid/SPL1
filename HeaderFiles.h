@@ -15,8 +15,9 @@ vector<double> backSubstitution( vector<vector<double>>& matrix);
 void luDecompose(vector<vector<double>>& A, vector<vector<double>>& L, vector<vector<double>>& U, vector<int>& P);
 vector<double> solveWithLU( vector<vector<double>>& A, vector<double>& B);
 void LU_DECOMPOSITION();
-vector<vector<double>> matrixInverse(const vector<vector<double>>& A);
-vector<vector<double>> matrixMultiply(const vector<vector<double>>& A, const vector<vector<double>>& B);
-double determinant(const vector<vector<double>>& A);
+vector<vector<double>> matrixInverse( vector<vector<double>>& A);
+vector<vector<double>> matrixMultiply( vector<vector<double>>& A,  vector<vector<double>>& B);
+double determinant( vector<vector<double>>& A);
 void matrixInversion();
-
+vector<double> solveLinearSystem( vector<vector<double>>& A,  vector<double>& B);
+void creamerRule();
