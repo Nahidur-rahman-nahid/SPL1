@@ -1,5 +1,4 @@
 #include "HeaderFiles.h"
-
 using namespace std;
 
 double determinant( vector<vector<double>>& A) {
@@ -7,7 +6,6 @@ double determinant( vector<vector<double>>& A) {
     if (n != A[0].size()) {
         throw runtime_error("Matrix is not square, and determinant cannot be calculated.");
     }
-
     if (n == 1) {
         return A[0][0];
     }

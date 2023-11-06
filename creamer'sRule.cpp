@@ -1,6 +1,5 @@
 #include"HeaderFiles.h"
-
-vector<double> solveLinearSystem( vector<vector<double>>& A,  vector<double>& B) {
+vector<double> solveLinearSystem( vector<vector<double>>& A,  vector<double>& B){
     int n = A.size();
     vector<double> solution(n);
 
@@ -10,7 +9,6 @@ vector<double> solveLinearSystem( vector<vector<double>>& A,  vector<double>& B)
     if (abs(detA) < 1e-10) {
         throw runtime_error("The coefficient matrix is singular. The system may have no unique solution or infinitely many solutions.");
     }
-
     // here goes the creamer's rule
     for (int i = 0; i < n; ++i) {
         vector<vector<double>> Ai = A;

@@ -2,8 +2,8 @@
 #include<bits/stdc++.h>
 #include<windows.h>
 #include <unistd.h>
-using namespace std;
 
+using namespace std;
 
 void printMatrix(vector<vector<double>>&matrix){
 
@@ -71,6 +71,8 @@ void gaussianElimination()
 
      cout << "Original Matrix:" << endl;
      printMatrix(matrix);
+
+     check();
 
      numRows = matrix.size();
      numCols = matrix[0].size();

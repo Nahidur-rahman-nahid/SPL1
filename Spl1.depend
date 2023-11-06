@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1694267139 source:c:\users\redmi\desktop\spl1\spl1\guassianelimination.cpp
+1694278045 source:c:\users\redmi\desktop\spl1\spl1\guassianelimination.cpp
 	"HeaderFiles.h"
 	<bits/stdc++.h>
 	<windows.h>
@@ -11,8 +11,9 @@
 1694162848 source:c:\users\redmi\desktop\spl1\spl1\gaussjordan.cpp
 	"HeaderFiles.h"
 
-1694268049 c:\users\redmi\desktop\spl1\spl1\headerfiles.h
+1694310759 c:\users\redmi\desktop\spl1\spl1\headerfiles.h
 	"HeaderFiles.h"
+	"gnuplot-iostream.h"
 	<bits/stdc++.h>
 	<windows.h>
 	<unistd.h>
@@ -24,6 +25,36 @@
 1694243119 source:c:\users\redmi\desktop\spl1\spl1\ludecomposition.cpp
 	"HeaderFiles.h"
 
-1694249026 source:c:\users\redmi\desktop\spl1\spl1\matrixinversion.cpp
+1694276196 source:c:\users\redmi\desktop\spl1\spl1\matrixinversion.cpp
 	"HeaderFiles.h"
+
+1694268300 source:c:\users\redmi\desktop\spl1\spl1\creamer'srule.cpp
+	"HeaderFiles.h"
+
+1696381963 c:\users\redmi\desktop\spl1\spl1\gnuplot-iostream.h
+	<cstdio>
+	<termios.h>
+	<unistd.h>
+	<util.h>
+	<pty.h>
+	<fstream>
+	<iostream>
+	<sstream>
+	<stdexcept>
+	<string>
+	<utility>
+	<iomanip>
+	<vector>
+	<complex>
+	<cstdint>
+	<cstdlib>
+	<cmath>
+	<tuple>
+	<type_traits>
+	<boost/iostreams/stream.hpp>
+	<boost/version.hpp>
+	<boost/utility.hpp>
+	<boost/tuple/tuple.hpp>
+	<boost/filesystem.hpp>
+	<blitz/array.h>
 

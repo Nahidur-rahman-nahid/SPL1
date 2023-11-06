@@ -1,5 +1,6 @@
 #pragma once
 #include "HeaderFiles.h"
+#include "gnuplot-iostream.h"
 #include<bits/stdc++.h>
 #include<windows.h>
 #include <unistd.h>
