@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear System Solver</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            /* font-family: 'Courier New', monospace; */
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        section {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        h1 {
+            color: #fff
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Linear System Solver</h1>
+    </header>
+ 
+    <section>
+        <h2>Methods</h2>
+        <p>1. Gaussian Elimination</p>
+        <p>2. Gauss-Jordan Elimination</p>
+        <p>3. LU Decomposition</p>
+        <p>4. Matrix Inversion</p>
+        <p>5. Creamer's Rule</p>
+        <p>6. Jacobian Method</p>
+        <p>7. Gauss-Siedel Method</p>
+        <p>8. Exit</p>
+        <button onclick="selectMethod()">Select Method</button>
+    </section>
+
+    <section id="output-section">
+        <!-- Output will be displayed here -->
+    </section>
+
+    <footer>
+       Software Project Lab - 01
+    </footer>
+
+    <script>
+        function selectMethod() {
+            var choice = prompt("Enter your preferred method to solve the system (1-8):");
+            if (choice === "1") {
+                gaussianElimination(); // Call the JavaScript equivalent of your C++ function
+            }
+            //Handle other choices as needed
+        }
+
+        function printMatrix(matrix){
+            var outputSection = document.getElementById('output-section');
+            var matrixText = '';
+
+            for (var i = 0; i < matrix.length; i++) {
+                for (var j = 0; j < matrix[0].length; j++) {
+                    if (matrix[i][j] >= 0.0)
+                        matrixText += "  " + matrix[i][j].toFixed(2) + "  ";
+                    else
+                        matrixText += matrix[i][j].toFixed(2) + "  ";
+                }
+                matrixText += '<br>';
+            }
+
+            outputSection.innerHTML += matrixText + '<br>';
+        }
+
+        function swapRows(matrix, row1, row2) {
+            var numCols = matrix[0].length;
+            for (var j = 0; j < numCols; j++) {
+                var temp = matrix[row1][j];
+                matrix[row1][j] = matrix[row2][j];
+                matrix[row2][j] = temp;
+            }
+        }
+
+        function backSubstitution(matrix) {
+            var numRows = matrix.length;
+            var numCols = matrix[0].length;
+            var solution = new Array(numRows);
+
+            for (var i = numRows - 1; i >= 0; --i) {
+                var sum = 0;
+                for (var j = i + 1; j < numCols - 1; ++j) {
+                    sum += matrix[i][j] * solution[j];
+                }
+                solution[i] = (matrix[i][numCols - 1] - sum) / matrix[i][i];
+            }
+            return solution;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function gaussianElimination() {
+            var matrix = [];
+            var numRows, numCols;
+
+            var outputSection = document.getElementById('output-section');
+            outputSection.innerHTML = ''; // Clear previous output
+
+            // Input part
+            numRows = parseInt(prompt("Enter the number of unknowns (>= 2):"));
+            numCols = numRows + 1;
+
+            for (var i = 0; i < numRows; i++) {
+                console.log("Enter coefficients for equation " + (i + 1) + " (separate by space):");
+                var inputRow = prompt().split(' ').map(parseFloat);
+                matrix.push(inputRow);
+            }
+            outputSection.innerHTML += 'The generated matrix: ' + '<br>';
+
+            printMatrix(matrix);
+
+            numRows = matrix.length;
+            numCols = matrix[0].length;
+
+            for (var i = 0; i < numRows - 1; ++i) {
+                // Partial pivoting: Find the row with the maximum pivot value
+                var maxRow = i;
+                for (var j = i + 1; j < numRows; ++j) {
+                    if (Math.abs(matrix[j][i]) > Math.abs(matrix[maxRow][i])) {
+                        maxRow = j;
+                    }
+                }
+
+                // Swap current row with the row containing the maximum pivot value
+                if (maxRow !== i) {
+                    swapRows(matrix, i, maxRow);
+                    outputSection.innerHTML += 'Swapping rows ' + (i + 1) + ' and ' + (maxRow + 1) + ':<br>';
+                    printMatrix(matrix);
+                    await sleep(1000); // Delay for 1 second (adjust as needed)
+                }
+
+                if (matrix[i][i] === 0) {
+                    outputSection.innerHTML += 'Pivot is zero. Skipping row.<br>';
+                    continue;
+                }
+
+                for (var j = i + 1; j < numRows; ++j) {
+                    var factor = matrix[j][i] / matrix[i][i];
+                    for (var k = i; k < numCols; ++k) {
+                        matrix[j][k] -= factor * matrix[i][k];
+                    }
+                }
+
+                outputSection.innerHTML += 'Step ' + (i + 1) + ':<br>';
+                await sleep(1000); // Delay for 1 second (adjust as needed)
+                printMatrix(matrix);
+            }
+
+            var solution = backSubstitution(matrix);
+
+            outputSection.innerHTML += 'Solution:<br>';
+            var ch = 'a';
+            for (var i = 0; i < solution.length; ++i) {
+                if (solution[i] >= 0.0)
+                    outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' +  " " + solution[i].toFixed(2) + '<br>';
+                else
+                    outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + solution[i].toFixed(2) + '<br>';
+            }
+        }
+    </script>
+
+</body>
+</html>
