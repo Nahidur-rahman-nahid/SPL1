@@ -100,28 +100,50 @@
     <script>
         function selectMethod() {
             var choice = prompt("Enter your preferred method to solve the system (1-8):");
+            alert("enter the equation(example :ax + by + c = d) in constant co-efficient form :a b c d  one by one");
             if (choice === "1") {
-                gaussianElimination(); // Call the JavaScript equivalent of your C++ function
+                gaussianElimination(); 
             }
-            //Handle other choices as needed
+            
+            
         }
 
+        // function printMatrix(matrix){
+        //     var outputSection = document.getElementById('output-section');
+        //     var matrixText = '';
+
+        //     for (var i = 0; i < matrix.length; i++) {
+        //         for (var j = 0; j < matrix[0].length; j++) {
+        //             // if (matrix[i][j] >= 0.0)
+        //             //    // matrixText += "  " + matrix[i][j].toFixed(2) + "  ";
+        //             //     matrixText += ' ' + matrix[i][j].toFixed(2) + "  ";
+        //             // else
+        //             //     matrixText += matrix[i][j].toFixed(2) + "  ";
+        //             matrixText += ' ' + matrix[i][j].toFixed(2);
+
+        //         }
+        //         matrixText += '<br>';
+        //     }
+
+        //     outputSection.innerHTML += matrixText + '<br>';
+        // }
+
         function printMatrix(matrix){
-            var outputSection = document.getElementById('output-section');
-            var matrixText = '';
+             var outputSection = document.getElementById('output-section');
+             var matrixText = '';
 
             for (var i = 0; i < matrix.length; i++) {
                 for (var j = 0; j < matrix[0].length; j++) {
-                    if (matrix[i][j] >= 0.0)
-                        matrixText += "  " + matrix[i][j].toFixed(2) + "  ";
-                    else
-                        matrixText += matrix[i][j].toFixed(2) + "  ";
+                    if(matrix[i][j] >= 0.0)
+                        matrixText += ' ' +  matrix[i][j].toFixed(2) + "  ";
+                    else matrixText += matrix[i][j].toFixed(2) + "  ";
                 }
-                matrixText += '<br>';
+                matrixText += '\n'; 
             }
 
-            outputSection.innerHTML += matrixText + '<br>';
+            outputSection.innerHTML += '<pre style = "font-size: inherit;">' + matrixText + '</pre><br>';
         }
+
 
         function swapRows(matrix, row1, row2) {
             var numCols = matrix[0].length;
@@ -156,12 +178,12 @@
             var numRows, numCols;
 
             var outputSection = document.getElementById('output-section');
-            outputSection.innerHTML = ''; // Clear previous output
+            outputSection.innerHTML = ''; //ami akhane Clear korchi
 
             // Input part
             numRows = parseInt(prompt("Enter the number of unknowns (>= 2):"));
             numCols = numRows + 1;
-
+            
             for (var i = 0; i < numRows; i++) {
                 console.log("Enter coefficients for equation " + (i + 1) + " (separate by space):");
                 var inputRow = prompt().split(' ').map(parseFloat);
@@ -175,7 +197,8 @@
             numCols = matrix[0].length;
 
             for (var i = 0; i < numRows - 1; ++i) {
-                // Partial pivoting: Find the row with the maximum pivot value
+                // Partial pivoting: Find the row with the maximum pivot value 
+                //ami jate diagonal element ta 0 thakleo somehow escape korte pari.... 
                 var maxRow = i;
                 for (var j = i + 1; j < numRows; ++j) {
                     if (Math.abs(matrix[j][i]) > Math.abs(matrix[maxRow][i])) {
@@ -204,7 +227,7 @@
                 }
 
                 outputSection.innerHTML += 'Step ' + (i + 1) + ':<br>';
-                await sleep(1000); // Delay for 1 second (adjust as needed)
+                await sleep(1000);    //akhane delay korchi 
                 printMatrix(matrix);
             }
 
@@ -212,12 +235,18 @@
 
             outputSection.innerHTML += 'Solution:<br>';
             var ch = 'a';
+            var ans = '';
             for (var i = 0; i < solution.length; ++i) {
-                if (solution[i] >= 0.0)
-                    outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' +  " " + solution[i].toFixed(2) + '<br>';
-                else
-                    outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + solution[i].toFixed(2) + '<br>';
+                // if (solution[i] >= 0.0)
+                //     outputSection.innerHTML += <pre> String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' +  " " + solution[i].toFixed(2) +  </pre>;
+                // else
+                //     outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + solution[i].toFixed(2) + '<br>';
+                //outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + solution[i].toFixed(2) + '<br>';
+                if(solution[i] >= 0.0)
+                    ans += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + ' ' + solution[i].toFixed(2) + '<br>';
+                else ans += String.fromCharCode(ch.charCodeAt(0) + i) + ' = '  + solution[i].toFixed(2) + '<br>';
             }
+            outputSection.innerHTML += '<pre style = "font-size: 14px;">' + ans + '</pre><br>';
         }
     </script>
 
