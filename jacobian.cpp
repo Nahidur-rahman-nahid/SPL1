@@ -1,6 +1,6 @@
 #include "HeaderFiles.h"
 
-void jacobiMethod() {
+void jacobiMethod(){
     vector<vector<double>> matrix;
     int numRows, numCols;
 

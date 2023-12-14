@@ -185,7 +185,7 @@
             numCols = numRows + 1;
             
             for (var i = 0; i < numRows; i++) {
-                console.log("Enter coefficients for equation " + (i + 1) + " (separate by space):");
+                alert("Enter coefficients for equation " + (i + 1) + " (separate by space):");
                 var inputRow = prompt().split(' ').map(parseFloat);
                 matrix.push(inputRow);
             }
