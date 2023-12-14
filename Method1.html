@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,12 +71,13 @@
         }
     </style>
 </head>
+
 <body>
 
     <header>
         <h1>Linear System Solver</h1>
     </header>
- 
+
     <section>
         <h2>Methods</h2>
         <p>1. Gaussian Elimination</p>
@@ -87,58 +89,56 @@
         <p>7. Gauss-Siedel Method</p>
         <p>8. Exit</p>
         <button onclick="selectMethod()">Select Method</button>
+        <!-- <button id="select-method-button">Select Method</button> -->
     </section>
 
     <section id="output-section">
         <!-- Output will be displayed here -->
+
     </section>
 
     <footer>
-       Software Project Lab - 01
+        Software Project Lab - 01
     </footer>
 
+    <!-- <script type="module" src="main.js" defer></script>
+    <script type="module" src="gaussianElimination.js" defer></script>  -->
     <script>
         function selectMethod() {
+            
             var choice = prompt("Enter your preferred method to solve the system (1-8):");
             alert("enter the equation(example :ax + by + c = d) in constant co-efficient form :a b c d  one by one");
             if (choice === "1") {
-                gaussianElimination(); 
+                gaussianElimination();
             }
-            
-            
+            else if (choice === "2")
+                gaussJordan();
+            else if (choice === "3")
+                LU_DECOMPOSITION();
+            else if(choice === "4")
+                matrixInversion();
+            else if(choice === '5')
+                creamerRule();
+            else if(choice === "6")
+                jacobiMethod();
+            else if(choice === "7")
+                gaussSeidelMethod();
+
         }
 
-        // function printMatrix(matrix){
-        //     var outputSection = document.getElementById('output-section');
-        //     var matrixText = '';
 
-        //     for (var i = 0; i < matrix.length; i++) {
-        //         for (var j = 0; j < matrix[0].length; j++) {
-        //             // if (matrix[i][j] >= 0.0)
-        //             //    // matrixText += "  " + matrix[i][j].toFixed(2) + "  ";
-        //             //     matrixText += ' ' + matrix[i][j].toFixed(2) + "  ";
-        //             // else
-        //             //     matrixText += matrix[i][j].toFixed(2) + "  ";
-        //             matrixText += ' ' + matrix[i][j].toFixed(2);
 
-        //         }
-        //         matrixText += '<br>';
-        //     }
-
-        //     outputSection.innerHTML += matrixText + '<br>';
-        // }
-
-        function printMatrix(matrix){
-             var outputSection = document.getElementById('output-section');
-             var matrixText = '';
+        function printMatrix(matrix) {
+            var outputSection = document.getElementById('output-section');
+            var matrixText = '';
 
             for (var i = 0; i < matrix.length; i++) {
                 for (var j = 0; j < matrix[0].length; j++) {
-                    if(matrix[i][j] >= 0.0)
-                        matrixText += ' ' +  matrix[i][j].toFixed(2) + "  ";
+                    if (matrix[i][j] >= 0.0)
+                        matrixText += ' ' + matrix[i][j].toFixed(2) + "  ";
                     else matrixText += matrix[i][j].toFixed(2) + "  ";
                 }
-                matrixText += '\n'; 
+                matrixText += '\n';
             }
 
             outputSection.innerHTML += '<pre style = "font-size: inherit;">' + matrixText + '</pre><br>';
@@ -183,7 +183,7 @@
             // Input part
             numRows = parseInt(prompt("Enter the number of unknowns (>= 2):"));
             numCols = numRows + 1;
-            
+
             for (var i = 0; i < numRows; i++) {
                 alert("Enter coefficients for equation " + (i + 1) + " (separate by space):");
                 var inputRow = prompt().split(' ').map(parseFloat);
@@ -242,13 +242,748 @@
                 // else
                 //     outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + solution[i].toFixed(2) + '<br>';
                 //outputSection.innerHTML += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + solution[i].toFixed(2) + '<br>';
-                if(solution[i] >= 0.0)
+                if (solution[i] >= 0.0)
                     ans += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + ' ' + solution[i].toFixed(2) + '<br>';
-                else ans += String.fromCharCode(ch.charCodeAt(0) + i) + ' = '  + solution[i].toFixed(2) + '<br>';
+                else ans += String.fromCharCode(ch.charCodeAt(0) + i) + ' = ' + solution[i].toFixed(2) + '<br>';
             }
             outputSection.innerHTML += '<pre style = "font-size: 14px;">' + ans + '</pre><br>';
         }
+
+
+
+        function gaussJordan() {
+            var matrix = [];
+            var numRows, numCols;
+
+            var outputSection = document.getElementById('output-section');
+            outputSection.innerHTML = ''; // Clear the output section
+
+            // Input part
+            numRows = parseInt(prompt("Enter the number of unknowns (>= 2):"));
+            numCols = numRows + 1;
+
+            for (var i = 0; i < numRows; i++) {
+                alert("Enter coefficients for equation " + (i + 1) + " (separate by space):");
+                var inputRow = prompt().split(' ').map(parseFloat);
+                matrix.push(inputRow);
+            }
+            outputSection.innerHTML += 'The generated matrix: ' + '<br>';
+
+            printMatrix(matrix);
+
+            numRows = matrix.length;
+            numCols = matrix[0].length;
+
+            for (var i = 0; i < numRows; ++i) {
+                // Display the current step number
+                outputSection.innerHTML += "Step " + (i + 1) + ":<br>";
+
+                // Partial pivoting: Find the row with the maximum pivot value
+                var maxRow = i;
+                for (var j = i + 1; j < numRows; ++j) {
+                    if (Math.abs(matrix[j][i]) > Math.abs(matrix[maxRow][i])) {
+                        maxRow = j;
+                    }
+                }
+
+                if (maxRow !== i) {
+                    swapRows(matrix, i, maxRow);
+                    outputSection.innerHTML += "Swapping rows " + i + " and " + maxRow + ":<br>";
+                    printMatrix(matrix);
+                }
+
+                if (Math.abs(matrix[i][i]) < 1e-10) {
+                    outputSection.innerHTML += "Zero pivot encountered. Swapping rows to avoid division by zero.<br>";
+                    var swapped = false;
+                    for (var j = i + 1; j < numRows; ++j) {
+                        if (Math.abs(matrix[j][i]) > 1e-10) {
+                            swapRows(matrix, i, j);
+                            outputSection.innerHTML += "Swapping rows " + i + " and " + j + ":<br>";
+                            swapped = true;
+                            break;
+                        }
+                    }
+                    if (!swapped) {
+                        outputSection.innerHTML += "No unique solution exists.<br>";
+                        return; // Exit the function if no unique solution exists
+                    }
+                }
+
+                var pivot = matrix[i][i];
+
+                // Scale the pivot row
+                for (var j = 0; j < numCols; ++j) {
+                    var tmp = matrix[i][j] / pivot;
+                    if (tmp == -0.00) matrix[i][j] = 0.00;
+                    else matrix[i][j] /= pivot;
+                }
+
+                // Eliminate other rows
+                for (var j = 0; j < numRows; ++j) {
+                    if (j !== i) {
+                        var factor = matrix[j][i];
+                        for (var k = 0; k < numCols; ++k) {
+                            matrix[j][k] -= factor * matrix[i][k];
+                            if (matrix[j][k] == -0.00) matrix[j][k] = 0.00;
+                        }
+                    }
+                }
+
+                // Display the matrix after the current step
+                outputSection.innerHTML += "Matrix after Step " + (i + 1) + ":<br>";
+                printMatrix(matrix);
+            }
+
+            outputSection.innerHTML += "Solution:<br>";
+            
+            for (var i = 0; i < numRows; i++) {
+                // outputSection.innerHTML += "x[" + i + "] : " + (matrix[i][numCols - 1] >= 0 ? " " : "") + matrix[i][numCols - 1].toFixed(2) + "<br>";
+                if (matrix[i][numCols - 1] >= 0) {
+                    outputSection.innerHTML += "x[" + i + "] : " + " " + matrix[i][numCols - 1].toFixed(2) + "<br>";
+                } else {
+                    outputSection.innerHTML +=  "x[" + i + "] : " + matrix[i][numCols - 1].toFixed(2) + "<br>";
+                }
+
+
+            }
+        }
+
+
+
+        //         vegal
+
+
+        function PrintMatrix(matrix, outputSection) {
+            const n = matrix.length;
+            const m = matrix[0].length;
+
+            for (let i = 0; i < n; ++i) {
+                for (let j = 0; j < m; ++j) {
+                    if (matrix[i][j] >= 0.0)
+                        outputSection.innerHTML += " " + matrix[i][j].toFixed(2) + " ";
+                    else outputSection.innerHTML += matrix[i][j].toFixed(2) + " ";
+                }
+                outputSection.innerHTML += "<br>";
+            }
+            outputSection.innerHTML += "<br>";
+        }
+
+
+
+        function luDecompose(A, L, U, P, outputSection) {
+            const n = A.length;
+            // Initialize L and U matrices
+            L = Array.from({ length: n }, () => Array(n).fill(0.0));
+            U = Array.from({ length: n }, () => Array(n).fill(0.0));
+
+            // Initialize permutation matrix P
+            P = Array.from({ length: n }, (_, i) => i);
+
+            // Perform LU decomposition with partial pivoting
+            for (let k = 0; k < n; ++k) {
+                // Find the pivot row
+                let pivotRow = k;
+                let pivotValue = 0.0;
+                for (let i = k; i < n; ++i) {
+                    if (Math.abs(A[i][k]) > pivotValue) {
+                        pivotValue = Math.abs(A[i][k]);
+                        pivotRow = i;
+                    }
+                }
+
+                // Check for singularity
+                if (pivotValue < 1e-10) {
+                    throw new Error("Matrix is singular. LU decomposition failed.");
+                }
+
+                // Swap rows in A, L, and P
+                [A[k], A[pivotRow]] = [A[pivotRow], A[k]];
+                [L[k], L[pivotRow]] = [L[pivotRow], L[k]];
+                [P[k], P[pivotRow]] = [P[pivotRow], P[k]];
+
+                // Calculate L and U elements
+                U[k][k] = A[k][k];
+                for (let i = k + 1; i < n; ++i) {
+                    L[i][k] = A[i][k] / U[k][k];
+                    U[k][i] = A[k][i];
+                }
+
+                // Update the remaining elements of A
+                for (let i = k + 1; i < n; ++i) {
+                    for (let j = k + 1; j < n; ++j) {
+                        A[i][j] -= L[i][k] * U[k][j];
+                    }
+                }
+
+                outputSection.innerHTML += "Step " + (k + 1) + ":<br>";
+                outputSection.innerHTML += "Pivot Row: " + pivotRow + "<br>";
+                outputSection.innerHTML += "A matrix:<br>";
+                PrintMatrix(A, outputSection);
+                outputSection.innerHTML += "L matrix:<br>";
+                PrintMatrix(L, outputSection);
+                outputSection.innerHTML += "U matrix:<br>";
+                PrintMatrix(U, outputSection);
+            }
+
+        }
+
+        function solveWithLU(A, B, outputSection) {
+            const n = A.length;
+            let L, U, P;
+
+            // Perform LU decomposition
+            luDecompose(A, L, U, P, outputSection);
+
+            // Apply permutation to B
+            const PB = P.map(i => B[i]);
+
+            // Solve Ly = PB using forward substitution
+            const y = Array(n).fill(0.0);
+            for (let i = 0; i < n; ++i) {
+                y[i] = PB[i];
+                for (let j = 0; j < i; ++j) {
+                    y[i] -= L[i][j] * y[j];
+                }
+            }
+
+            // Solve Ux = y using backward substitution
+            const x = Array(n).fill(0.0);
+            for (let i = n - 1; i >= 0; --i) {
+                x[i] = y[i];
+                for (let j = i + 1; j < n; ++j) {
+                    x[i] -= U[i][j] * x[j];
+                }
+                x[i] /= U[i][i];
+            }
+
+            return x;
+        }
+
+
+
+
+
+        function LU_DECOMPOSITION() {
+            var outputSection = document.getElementById('output-section');
+            let n;
+            outputSection.innerHTML = ''
+            //outputSection.innerHTML += "Enter the number of unknowns: <br>";
+            // Reading the number of unknowns from the user
+            //
+            // For example, using prompt() or reading from HTML input fields
+            n = parseInt(prompt("Enter the number of unknowns (>= 2):"));
+            // parseInt(prompt());
+            let A = Array.from({ length: n }, () => Array(n).fill(0.0));
+            let B = Array(n);
+            for (let i = 0; i < n; ++i) {
+                outputSection.innerHTML += "Enter " + (i + 1) + "th number equation : ";
+
+                var inputRow = prompt().split(' ').map(parseFloat);
+                A.push(inputRow);
+                B[i][0] = parseFloat(prompt("enter the constant"));
+            }
+            //eta onno code
+
+
+            try {
+                let solution = solveWithLU(A, B, outputSection);
+
+                outputSection.innerHTML += "Solution:<br>";
+                for (let i = 0; i < n; ++i) {
+                    outputSection.innerHTML +=
+                        "x[" + i + "] = " + (solution[i] >= 0 ? "  " : "") + solution[i].toFixed(2)+ "<br>";
+                }
+            } catch (error) {
+                outputSection.innerHTML += error.message + "<br>";
+            }
+        }
+
+
+
+
+               //MATRIX INVERSION 
+
+
+
+        function matrixInversion() {
+            var n;
+            var outputSection = document.getElementById('output-section');
+            outputSection.innerHTML = ''; // Clear the output section
+
+            // Reading the number of unknowns from the user
+            n = parseInt(prompt("Enter the number of unknowns:"));
+
+            // Define your coefficient matrix A and the right-hand side vector B
+            var A = Array.from({ length: n }, () => Array(n).fill(0.0));
+            var B = Array.from({ length: n }, () => Array(1).fill(0.0));
+
+            // Input part
+            outputSection.innerHTML += 'Enter the coefficients of the linear system:<br>';
+            for (var i = 0; i < n; ++i) {
+                for (var j = 0; j < n; ++j) {
+                    A[i][j] = parseFloat(prompt(`A[${i}][${j}]:`));
+                }
+                B[i][0] = parseFloat(prompt(`B[${i}]:`));
+            }
+
+            try {
+                // Calculate the inverse of A
+                var A_inverse = matrixInverse(A);
+
+                // Multiply A_inverse by B to get the solution X
+                var X = matrixMultiply(A_inverse, B);
+
+                
+
+                // Display matrices and solution in the output section
+                outputSection.innerHTML += '<p>Matrix A:</p>';
+                outputSection.innerHTML += `<pre>${matrixToString(A)}</pre>`;
+
+                outputSection.innerHTML += '<p>Matrix A Inverse:</p>';
+                outputSection.innerHTML += `<pre>${matrixToString(A_inverse)}</pre>`;
+
+                outputSection.innerHTML += '<p>Matrix B:</p>';
+                outputSection.innerHTML += `<pre>${matrixToString(B)}</pre>`;
+
+                outputSection.innerHTML += '<p>Solution X:</p>';
+                var ans = '';
+                
+                for (var i = 0; i < n; ++i) {
+                    if(X[i][0] >= 0.0)
+                        ans += "X[ " + i + " ] = " +  " " + X[i][0].toFixed(2) + '<br>'
+                    else ans += "X[ " + i + " ] = "  + X[i][0].toFixed(2) + '<br>'     
+                        //`<p>x[${i}] = ${X[i][0] >= 0.0 ? '  ' : ''}${X[i][0]}</p>`;
+                }
+                outputSection.innerHTML += ans ;
+
+            } catch (error) {
+                outputSection.innerHTML += `<p>Error: ${error.message}</p>`;
+            }
+        }
+
+        // Function to calculate the determinant of a matrix
+        function determinant(A) {
+            var n = A.length;
+            if (n != A[0].length) {
+                throw new Error("Matrix is not square, and determinant cannot be calculated.");
+            }
+
+            if (n == 1) {
+                return A[0][0];
+            }
+
+            if (n == 2) {
+                return A[0][0] * A[1][1] - A[0][1] * A[1][0];
+            }
+
+            var det = 0.0;
+            for (var i = 0; i < n; ++i) {
+                var submatrix = Array.from({ length: n - 1 }, () => Array(n - 1).fill(0.0));
+                for (var j = 1; j < n; ++j) {
+                    var col = 0;
+                    for (var k = 0; k < n; ++k) {
+                        if (k != i ) {
+                            submatrix[j - 1][col] = A[j][k];
+                            ++col;
+                        }
+                    }
+                }
+                det += (i % 2 == 0 ? 1.0 : -1.0) * A[0][i] * determinant(submatrix);
+            }
+
+            return det;
+        }
+
+        // Function to multiply two matrices
+        function matrixMultiply(A, B) {
+            var n = A.length;
+            var m = B[0].length;
+            var p = B.length;
+
+            var result = Array.from({ length: n }, () => Array(m).fill(0.0));
+
+            for (var i = 0; i < n; ++i) {
+                for (var j = 0; j < m; ++j) {
+                    for (var k = 0; k < p; ++k) {
+                        result[i][j] += A[i][k] * B[k][j];
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        // Function to perform matrix inversion
+        function matrixInverse(A) {
+            var n = A.length;
+            if (n != A[0].length || determinant(A) == 0.0) {
+                throw new Error("Matrix is singular. The linear system may have no unique solution or infinitely many solutions.");
+            }
+
+            // Create an augmented matrix [A | I], where I is the identity matrix
+            var augmented = Array.from({ length: n }, () => Array(2 * n).fill(0.0));
+            for (var i = 0; i < n; ++i) {
+                for (var j = 0; j < n; ++j) {
+                    augmented[i][j] = A[i][j];
+                    if (i == j) {
+                        augmented[i][j + n] = 1.0;
+                    }
+                }
+            }
+
+            // Perform row operations to get the inverse
+            for (var i = 0; i < n; ++i) {
+                // Make the diagonal element 1
+                var pivot = augmented[i][i];
+                for (var j = 0; j < 2 * n; ++j) {
+                    augmented[i][j] /= pivot;
+                }
+
+                // Make other rows' elements in the same column 0
+                for (var k = 0; k < n; ++k) {
+                    if (k != i) {
+                        var factor = augmented[k][i];
+                        for (var j = 0; j < 2 * n; ++j) {
+                            augmented[k][j] -= factor * augmented[i][j];
+                        }
+                    }
+                }
+            }
+
+            // Extract the inverse matrix from the augmented matrix
+            var inverse = Array.from({ length: n }, () => Array(n).fill(0.0));
+            for (var i = 0; i < n; ++i) {
+                for (var j = 0; j < n; ++j) {
+                    inverse[i][j] = augmented[i][j + n];
+                }
+            }
+
+            return inverse;
+        }
+
+        // Helper function to convert a matrix to string for display
+        function matrixToString(matrix) {
+            return matrix.map(row => row.map(val => val.toFixed(2)).join(' ')).join('<br>');
+        }
+
+
+
+        // Function to calculate the determinant of a matrix
+function determinant(A) {
+    var n = A.length;
+    if (n != A[0].length) {
+        throw new Error("Matrix is not square, and determinant cannot be calculated.");
+    }
+
+    if (n == 1) {
+        return A[0][0];
+    }
+
+    if (n == 2) {
+        return A[0][0] * A[1][1] - A[0][1] * A[1][0];
+    }
+
+    var det = 0.0;
+    for (var i = 0; i < n; ++i) {
+        var submatrix = Array.from({ length: n - 1 }, () => Array(n - 1).fill(0.0));
+        for (var j = 1; j < n; ++j) {
+            var col = 0;
+            for (var k = 0; k < n; ++k) {
+                if (k != i) {
+                    submatrix[j - 1][col] = A[j][k];
+                    ++col;
+                }
+            }
+        }
+        det += (i % 2 == 0 ? 1.0 : -1.0) * A[0][i] * determinant(submatrix);
+    }
+
+    return det;
+}
+
+// Function to solve a linear system using Cramer's Rule
+
+
+function solveLinearSystem(A, B,outputSection) {
+    var n = A.length;
+    var solution = Array(n).fill(0.0);
+
+    // Calculate the determinant of the coefficient matrix A
+    var detA = determinant(A);
+
+    if (Math.abs(detA) < 1e-10) {
+        throw new Error("The coefficient matrix is singular. The system may have no unique solution or infinitely many solutions.");
+    }
+
+    // Apply Cramer's Rule
+    for (var i = 0; i < n; ++i) {
+        var Ai = A.map(row => [...row]);
+        for (var j = 0; j < n; ++j) {
+            Ai[j][i] = B[j];
+        }
+        var store = '';
+        for(var k = 0;k < n;k++){
+            for(var s = 0;s < n;s++){
+                if(Ai[s][k] >= 0.0)
+                    store += ' ' + Ai[k][s] + ' ';
+                else  store +=  Ai[k][s] + ' ';
+            }
+            store += '<br>';
+        }
+        outputSection.innerHTML += "Step " + (i+1) + " : " + '<br>';
+        outputSection.innerHTML += store;
+        outputSection.innerHTML += "the determinant of A" + (i+1)  + " matrix is: " + determinant(Ai) + " and the det(A) is: " + detA + '<br>'; 
+        solution[i] = determinant(Ai) / detA;
+    }
+
+    return solution;
+}
+
+// Function to perform Cramer's Rule
+function creamerRule() {
+    var n;
+    var outputSection = document.getElementById('output-section');
+    outputSection.innerHTML = ''; // Clear the output section
+
+    // koyta unknowns 
+    n = parseInt(prompt("Enter the number of unknowns:"));
+
+    // Define your coefficient matrix A and the right-hand side vector B
+    var A = Array.from({ length: n }, () => Array(n).fill(0.0));
+    var B = Array(n);
+
+    // Input part
+   // outputSection.innerHTML += 'Enter the coefficients of the linear system:<br>';
+    for (var i = 0; i < n; ++i) {
+        for (var j = 0; j < n; ++j) {
+            A[i][j] = parseFloat(prompt(`A[${i}][${j}]:`));
+        }
+        B[i] = parseFloat(prompt(`B[${i}]:`));
+    }
+
+    try {
+        // Solve the linear system using Cramer's Rule
+        var solution = solveLinearSystem(A, B,outputSection);
+
+        // Display matrices and solution in the output section
+        outputSection.innerHTML += '<p>Coefficient Matrix A:</p>';
+        outputSection.innerHTML += `<pre>${matrixToString(A)}</pre>`;
+
+        outputSection.innerHTML += '<p>Right-hand Side Vector B:</p>';
+        outputSection.innerHTML += `<pre>${vectorToString(B)}</pre>`;
+
+        outputSection.innerHTML += '<p>Solution X:</p>';
+        for (var i = 0; i < n; ++i) {
+            outputSection.innerHTML +=
+                `<p>x[${i}] = ${solution[i] >= 0.0 ? ' ' : ''}${solution[i]}</p>`;
+        }
+    } catch (error) {
+        outputSection.innerHTML += `<p>Error: ${error.message}</p>`;
+    }
+}
+
+
+
+// Helper function to convert a vector to string for display
+function vectorToString(vector) {
+    return vector.map(val => val.toFixed(2)).join('<br>');
+}
+
+
+
+//JACOBI METHOD
+
+function swapRowsWithCondition(A, B,outputSection) {
+    var n = A.length;
+
+    for (var i = 0; i < n; ++i) {
+        var sum = 0.0;
+        for (var j = 0; j < n; ++j) {
+            if (j !== i) {
+                sum += Math.abs(A[i][j]);
+            }
+        }
+
+        // Swap the row if the condition is not satisfied
+        if (Math.abs(A[i][i]) <= sum) {
+            outputSection.innerHTML += '<p>Not diagonally dominant</p>';
+            outputSection.innerHTML += '<p>Trying to make it...</p>';
+            for (var k = 0; k < n; ++k) {
+                var temp = A[i][k];
+                A[i][k] = A[i + 1][k];
+                A[i + 1][k] = temp;
+            }
+            var tempB = B[i];
+            B[i] = B[i + 1];
+            B[i + 1] = tempB;
+        }
+        if (Math.abs(A[i][i]) < sum) {
+            outputSection.innerHTML += "<p>Can't make it</p>";
+            exit(0); // Note: exit(0) is not recommended in JavaScript, consider using a different approach
+        }
+    }
+}
+
+
+function jacobi(A, B, maxIterations, tolerance,outputSection) {
+    var n = A.length;
+    var X = Array(n).fill(0.0); // Initial guess for the solution
+
+    for (var iter = 0; iter < maxIterations; ++iter) {
+        var nextX = Array(n).fill(0.0);
+
+        // Update each component of the solution
+        for (var i = 0; i < n; ++i) {
+            var sum = 0.0;
+            for (var j = 0; j < n; ++j) {
+                if (j !== i) {
+                    sum += A[i][j] * X[j];
+                }
+            }
+            nextX[i] = (B[i] - sum) / A[i][i];
+        }
+
+        // Check for convergence
+        var maxDiff = 0.0;
+        for (var i = 0; i < n; ++i) {
+            maxDiff = Math.max(maxDiff, Math.abs(nextX[i] - X[i]));
+        }
+
+        // Update the solution
+        X = nextX;
+         
+        // Check for convergence
+        if (maxDiff < tolerance) {
+            outputSection.innerHTML += `<p>Converged in ${iter + 1} iterations.</p>`;
+            return X;
+        } else {
+            outputSection.innerHTML += `<p>Step: ${iter + 1}</p>`;
+            for (var i = 0; i < n; i++) {
+                outputSection.innerHTML += `<p>X[${i}] = ${X[i].toFixed(2)}</p>`;
+            }
+        }
+    }
+
+    outputSection.innerHTML += '<p>Jacobi method did not converge within the specified number of iterations.</p>';
+    return X; // Return the current solution, even if not converged
+}
+
+
+
+function jacobiMethod() {
+    var n;
+    var outputSection = document.getElementById('output-section');
+    outputSection.innerHTML = ''; // Clear the output section
+
+    // Reading the number of unknowns from the user
+    n = parseInt(prompt("Enter the number of unknowns:"));
+
+    // Define your coefficient matrix A and the right-hand side vector B
+    var A = Array.from({ length: n }, () => Array(n).fill(0.0));
+    var B = Array(n).fill(0.0);
+
+    // Input part
+    outputSection.innerHTML += 'Enter the coefficients of the linear system:<br>';
+    for (var i = 0; i < n; ++i) {
+        for (var j = 0; j < n; ++j) {
+            A[i][j] = parseFloat(prompt(`A[${i}][${j}]:`));
+        }
+        B[i] = parseFloat(prompt(`B[${i}]:`));
+    }
+
+    // Swap rows to satisfy the condition
+    swapRowsWithCondition(A, B,outputSection);
+
+    // Perform Jacobi method with a maximum of 1000 iterations and tolerance of 1e-10
+    var solution = jacobi(A, B, 1000, 1e-5,outputSection);
+
+    // Display the solution
+    outputSection.innerHTML += '<p>Solution X:</p>';
+    for (var i = 0; i < n; ++i) {
+        outputSection.innerHTML +=
+            `<p>x[${i}] = ${solution[i] >= 0.0 ? ' ' : ''}${solution[i].toFixed(2)}</p>`;
+    }
+}
+
+//GAUSS SEIDEL METHOD
+
+function gaussSeidelMethod() {
+    var n;
+    var outputSection = document.getElementById('output-section');
+    outputSection.innerHTML = ''; // Clear the output section
+
+    // Reading the number of unknowns from the user
+    n = parseInt(prompt("Enter the number of unknowns:"));
+
+    // Define your coefficient matrix A and the right-hand side vector B
+    var system = Array.from({ length: n }, () => Array(n + 1).fill(0.0));
+
+    // Input part
+    outputSection.innerHTML += 'Enter the coefficients of the linear system:<br>';
+    for (var i = 0; i < n; ++i) {
+        for (var j = 0; j <= n; ++j) {
+            system[i][j] = parseFloat(prompt(`A[${i}][${j}]:`));
+        }
+    }
+
+    // Check if the matrix is diagonally dominant
+    for (var i = 0; i < n; i++) {
+        var sum = 0;
+        for (var j = 0; j < n; j++) {
+            if (i !== j) {
+                sum += Math.abs(system[i][j]);
+            }
+        }
+        if (Math.abs(system[i][i]) < sum) {
+            outputSection.innerHTML += "Not Diagonally Dominant<br>";
+            return;
+        }
+    }
+
+    var previousSolution = Array(n).fill(0.0);
+    var newSolution = Array(n).fill(0.0);
+    var flag = 0;
+    var iteration = 0;
+
+    while (true) {
+        iteration++;
+
+        for (var i = 0; i < n; i++) {
+            newSolution[i] = system[i][n];
+            for (var j = 0; j < n; j++) {
+                if (i !== j) {
+                    newSolution[i] -= newSolution[j] * system[i][j];
+                }
+            }
+            newSolution[i] = newSolution[i] / system[i][i];
+        }
+
+        outputSection.innerHTML += `<p>Iteration ${iteration}: ${newSolution.map(value => value.toFixed(2)).join(', ')}</p>`;
+
+        var maxDiff = 0.0;
+        for (var i = 0; i < n; i++) {
+            maxDiff = Math.max(maxDiff, Math.abs(previousSolution[i] - newSolution[i]));
+        }
+
+        if (maxDiff < 0.000001) {
+            outputSection.innerHTML += `<p>Converged in ${iteration} iterations.</p>`;
+            outputSection.innerHTML += `<p>Final Solution: ${newSolution.map(value => value.toFixed(2)).join(', ')}</p>`;
+            break;
+        }
+
+        for (var i = 0; i < n; i++) {
+            previousSolution[i] = newSolution[i];
+        }
+    }
+}
+
+
+
+
+
+
     </script>
 
 </body>
+
 </html>
