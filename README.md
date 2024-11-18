@@ -1,0 +1,1 @@
+In this project,You can solve linear system equations(consistent) with several methods  showing each steps and guiding you in every steps how to proceed.In scientific calculation,you can solve equation at most 4 variable but it'll give you authority to solve efficiently equations with more variable handling the edge cases and keep awaring invalid inputs.
